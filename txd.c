@@ -58,6 +58,7 @@ int main(int argc, char* argv[argc + 1]) {
 		memcpy(input + input_size, buf, bytes_read);
 		input_size += bytes_read;
 	}
+	input[input_size] = '\0';
 	
 
 	
