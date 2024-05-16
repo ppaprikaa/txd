@@ -43,7 +43,7 @@ txd txd.c
 Dumping input stream
 
 ```bash
-$ echo "somestring" | ./txd
+$ echo "somestring" | txd
 00000000: 736F 6D65 7374 7269 6E67 0A                  somestring.
 
 ```
