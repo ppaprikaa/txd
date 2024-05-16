@@ -30,6 +30,39 @@ int main(int argc, char* argv[argc + 1]) {
 		return EXIT_FAILURE;
 	}
 
+	char *input = NULL;
+	size_t outsize = 0;
+	
+	while(!feof(f)) {
+		size_t bytes_read = fread(buf, 1, BUF_SIZE, f);
+
+		if (bytes_read == 0 && !feof(f)) {
+			perror("error: EOF");
+			return EXIT_FAILURE;
+		}
+		if (!input) {
+			input = malloc(bytes_read + 1);
+			outsize += bytes_read;
+			memcpy(input, buf, outsize);
+			continue;
+		}
+
+		
+		char *new = realloc(input, outsize + bytes_read + 1);
+		if (!new) {
+			free(input);
+			perror("error: memory allocation fail");
+			return EXIT_FAILURE;
+		}
+		input = new;
+		memcpy(input + outsize, buf, bytes_read);
+		outsize += bytes_read;
+	}
+	
+
+	
+
+	if (input) free(input);
 	if (argc == 2) {
 		fclose(f);
 	}
