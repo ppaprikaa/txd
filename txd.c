@@ -31,7 +31,7 @@ int main(int argc, char* argv[argc + 1]) {
 	}
 
 	char *input = NULL;
-	size_t outsize = 0;
+	size_t input_size = 0;
 	
 	while(!feof(f)) {
 		size_t bytes_read = fread(buf, 1, BUF_SIZE, f);
@@ -42,21 +42,21 @@ int main(int argc, char* argv[argc + 1]) {
 		}
 		if (!input) {
 			input = malloc(bytes_read + 1);
-			outsize += bytes_read;
-			memcpy(input, buf, outsize);
+			input_size += bytes_read;
+			memcpy(input, buf, input_size);
 			continue;
 		}
 
 		
-		char *new = realloc(input, outsize + bytes_read + 1);
+		char *new = realloc(input, input_size + bytes_read + 1);
 		if (!new) {
 			free(input);
 			perror("error: memory allocation fail");
 			return EXIT_FAILURE;
 		}
 		input = new;
-		memcpy(input + outsize, buf, bytes_read);
-		outsize += bytes_read;
+		memcpy(input + input_size, buf, bytes_read);
+		input_size += bytes_read;
 	}
 	
 
