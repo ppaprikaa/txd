@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +9,7 @@ char *cmd = NULL;
 char buf[BUF_SIZE];
 
 void usage();
+void print_hexdump(char *in, size_t size);
 
 int main(int argc, char* argv[argc + 1]) {
 	cmd = argv[0];
@@ -47,7 +49,6 @@ int main(int argc, char* argv[argc + 1]) {
 			continue;
 		}
 
-		
 		char *new = realloc(input, input_size + bytes_read + 1);
 		if (!new) {
 			free(input);
@@ -60,8 +61,7 @@ int main(int argc, char* argv[argc + 1]) {
 	}
 	input[input_size] = '\0';
 	
-
-	
+	print_hexdump(input, input_size);
 
 	if (input) free(input);
 	if (argc == 2) {
@@ -69,6 +69,43 @@ int main(int argc, char* argv[argc + 1]) {
 	}
 
 	return EXIT_SUCCESS;
+}
+
+void print_hexdump(char *in, size_t size) {
+	size_t offset = 0;
+
+	for (size_t i = 0; i < size; i++) {
+		if(i % 16 == 0) {
+			fprintf(stdout, "%08zX: ", offset);
+			offset += 16;
+		}
+
+		fprintf(stdout, "%02X", (unsigned char)in[i]);
+		if (i % 2 != 0) fprintf(stdout, " ");
+
+		if((i + 1) % 16 == 0 || i == size - 1)  {
+			size_t spaces = 16 - (i % 16);
+			for (size_t j = 0; j < spaces; j++) {
+				fprintf(stdout, "   ");
+			}
+
+			
+			for (size_t j = i - (i % 16); j <= i; j++) {
+				if (in[j] == ' ') {
+					fprintf(stdout, " ");
+					continue;
+				}
+				if (isspace(in[j])) {
+					fprintf(stdout, ".");
+					continue;
+				}
+				fprintf(stdout, "%c", in[j]);
+			}
+
+			fprintf(stdout, "\n");
+		}
+	}
+	fflush(stdout);
 }
 
 void usage() {
