@@ -89,17 +89,12 @@ void print_hexdump(char *in, size_t size) {
 				fprintf(stdout, "   ");
 			}
 
-			
 			for (size_t j = i - (i % 16); j <= i; j++) {
-				if (in[j] == ' ') {
-					fprintf(stdout, " ");
-					continue;
-				}
-				if (isspace(in[j])) {
+				if (' ' <= in[j] || in[j] >= '~') {
+					fprintf(stdout, "%c", in[j]);
+				} else {
 					fprintf(stdout, ".");
-					continue;
 				}
-				fprintf(stdout, "%c", in[j]);
 			}
 
 			fprintf(stdout, "\n");
