@@ -25,6 +25,11 @@ int main(int argc, char* argv[argc + 1]) {
 		f = stdin;
 	}
 
+	if (f == NULL) {
+		perror("failed to open file");
+		return EXIT_FAILURE;
+	}
+
 	if (argc == 2) {
 		fclose(f);
 	}
