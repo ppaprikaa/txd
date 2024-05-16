@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define BUF_SIZE 2048
 
@@ -10,6 +11,11 @@ void usage();
 
 int main(int argc, char* argv[argc + 1]) {
 	cmd = argv[0];
+
+	if (argc == 2 && (!strcmp("--help", argv[1]) || !strcmp("-h", argv[1]))) {
+		usage();	
+		return EXIT_SUCCESS;
+	}
 }
 
 void usage() {
