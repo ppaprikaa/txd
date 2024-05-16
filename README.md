@@ -7,6 +7,7 @@ Features:
 1. Can dump files
 2. Can dump from input stream
 
+Dumping files.
 ```bash
 txd txd.c
 00000000: 2369 6E63 6C75 6465 203C 6374 7970 652E    #include <ctype.
@@ -33,4 +34,16 @@ txd txd.c
 00000150: 0975 7361 6765 2829 3B09 0A09 0972 6574    .usage();....ret
 00000160: 7572 6E20 4558 4954 5F53 5543 4345 5353    urn EXIT_SUCCESS
 ...
+00000810: 7468 656E 2025 7320 7769 6C6C 2072 6561    then %s will rea
+00000820: 6420 6672 6F6D 2053 5444 494E 5C6E 222C    d from STDIN\n",
+00000830: 2063 6D64 293B 0A09 6666 6C75 7368 2873     cmd);..fflush(s
+00000840: 7464 6F75 7429 3B0A 7D0A                      tdout);.}.
+```
+
+Dumping input stream
+
+```bash
+$ echo "somestring" | ./txd
+00000000: 736F 6D65 7374 7269 6E67 0A                  somestring.
+
 ```
