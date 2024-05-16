@@ -16,6 +16,20 @@ int main(int argc, char* argv[argc + 1]) {
 		usage();	
 		return EXIT_SUCCESS;
 	}
+
+	FILE *f = NULL;
+
+	if (argc == 2) {
+		f = fopen(argv[1], "r");
+	} else {
+		f = stdin;
+	}
+
+	if (argc == 2) {
+		fclose(f);
+	}
+
+	return EXIT_SUCCESS;
 }
 
 void usage() {
